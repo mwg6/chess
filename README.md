@@ -1,2 +1,2 @@
 # chess
-Chess in java
+Chess in java- implemented with java swing
