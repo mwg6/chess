@@ -6,7 +6,7 @@ import Pieces.Piece;
 import java.awt.*;
 
 public class Mother {
-
+    //the tiniest fucking change possible
     public boolean isWhiteTurn;
 
     public Mother(){
