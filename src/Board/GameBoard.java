@@ -123,14 +123,16 @@ public class GameBoard {
                         if(b.isSelected()){
                             //move case
                             System.out.println(b.getRow() +" "+b.getPiece());
-                            mother.move(b.selectedBy(), b.getRow(), b.getCol(), getChessboardTiles());
+                            chessboardTiles = mother.move(b.selectedBy(), b.getRow(), b.getCol(), getChessboardTiles());
                             clearAnnotations(chessboardTiles);
+                            setChessboardTiles(chessboardTiles);
                         }
                         else{
                             if(null!=b.getPiece()){
 
                                 clearAnnotations(chessboardTiles);
-                                mother.processMove(b.getPiece(), getChessboardTiles());
+                                chessboardTiles = mother.processMove(b.getPiece(), getChessboardTiles());
+                                setChessboardTiles(chessboardTiles);
 
                             }
                             else{
@@ -233,5 +235,15 @@ public class GameBoard {
     }
     public Tile[][] getChessboardTiles(){
         return chessboardTiles;
+    }
+
+    public void setChessboardTiles(Tile[][] chessboardTiles) {
+
+        for(int i = 0; i<chessboardTiles.length; i++){
+            for(int j = 0; j<chessboardTiles[i].length; j++){
+                chessBoard.add(chessboardTiles[i][j]);
+
+            }
+        }
     }
 }

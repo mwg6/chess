@@ -5,6 +5,7 @@ import java.awt.*;
 
 public interface Piece {
 
+
     public Color getSide();
 
     public String getType();

@@ -1,6 +1,8 @@
 package Logic;
 
+import Board.GameBoard;
 import Board.Tile;
+import Pieces.Pawn;
 import Pieces.Piece;
 
 import java.awt.*;
@@ -12,7 +14,8 @@ public class Mother {
     public Mother(){
         isWhiteTurn = true;
     }
-    public void processMove(Piece piece, Tile[][] tiles){
+
+    public Tile[][] processMove(Piece piece, Tile[][] tiles){
 
         String type = piece.getType();
         Tile tile = tiles[piece.getRow()][piece.getCol()];
@@ -45,8 +48,10 @@ public class Mother {
             }
         }
 
+        return tiles;
+
     }
-    public void move(Piece attack, int row, int col, Tile[][] tiles){
+    public Tile[][] move(Piece attack, int row, int col, Tile[][] tiles){
         int oRow = attack.getRow();
         int oCol = attack.getCol();
 
@@ -55,6 +60,9 @@ public class Mother {
         attack.setRow(row);
         attack.setCol(col);
 
-        tiles[row][col].setPiece(attack);
+        tiles[row][col].setPiece(new Pawn(attack.getSide(), attack.getRow(), attack.getCol()));
+
+        return tiles;
+
     }
 }
