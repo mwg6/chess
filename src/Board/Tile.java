@@ -30,7 +30,7 @@ public class Tile extends JButton {
         this.piece = piece;
         setIcon(piece==null?null:piece.getIcon());
     }
-
+    
     public int getRow(){
         return row;
     }
