@@ -46,6 +46,7 @@ public class GameBoard {
         JToolBar tools = new JToolBar();
         tools.setFloatable(false);
         gui.add(tools, BorderLayout.PAGE_START);
+        gui.setMinimumSize(new Dimension(200,200));
 
         //adding toolbar compenents
         tools.add(new JButton("To DO"));
@@ -122,20 +123,22 @@ public class GameBoard {
                     public void actionPerformed(ActionEvent e){
                         if(b.isSelected()){
                             //move case
-                            System.out.println(b.getRow() +" "+b.getPiece());
-                            chessboardTiles = mother.move(b.selectedBy(), b.getRow(), b.getCol(), getChessboardTiles());
+                            System.out.println("Selected Square");
+                            chessboardTiles = move(b.selectedBy(), b.getRow(), b.getCol(), getChessboardTiles());
                             clearAnnotations(chessboardTiles);
                             setChessboardTiles(chessboardTiles);
                         }
                         else{
                             if(null!=b.getPiece()){
-
+                                System.out.println("Non null piece square");
                                 clearAnnotations(chessboardTiles);
-                                chessboardTiles = mother.processMove(b.getPiece(), getChessboardTiles());
+                                chessboardTiles = processMove(b.getPiece(), getChessboardTiles());
                                 setChessboardTiles(chessboardTiles);
 
                             }
                             else{
+                                System.out.println("Null piece square");
+
                                 clearAnnotations(chessboardTiles);
                             }
 
@@ -148,12 +151,7 @@ public class GameBoard {
             }
         }
 
-        for(int i = 0; i<chessboardTiles.length; i++){
-            for(int j = 0; j<chessboardTiles[i].length; j++){
-                chessBoard.add(chessboardTiles[i][j]);
-
-            }
-        }
+        setChessboardTiles(chessboardTiles);
     }
 
     public void clearAnnotations(Tile[][] chessboardTiles){
@@ -245,5 +243,58 @@ public class GameBoard {
 
             }
         }
+    }
+
+    public Tile[][] processMove(Piece piece, Tile[][] tiles){
+
+        String type = piece.getType();
+        Tile tile = tiles[piece.getRow()][piece.getCol()];
+        System.out.println("Processing move");
+
+        if("PAWN".equals(type)){
+
+            if(Color.WHITE.equals(piece.getSide())){
+
+                tiles[piece.getRow()-1][piece.getCol()].setBackground(Color.YELLOW);
+                tiles[piece.getRow()-1][piece.getCol()].setSelected(true, piece);
+
+                if(6==piece.getRow()){
+
+                    tiles[piece.getRow()-2][piece.getCol()].setBackground(Color.YELLOW);
+                    tiles[piece.getRow()-2][piece.getCol()].setSelected(true, piece);
+
+                }
+            }
+            else{
+                tiles[piece.getRow()+1][piece.getCol()].setBackground(Color.YELLOW);
+                tiles[piece.getRow()+1][piece.getCol()].setSelected(true, piece);
+
+                if(1==piece.getRow()){
+
+                    tiles[piece.getRow()+2][piece.getCol()].setBackground(Color.YELLOW);
+                    tiles[piece.getRow()+2][piece.getCol()].setSelected(true, piece);
+
+                }
+            }
+        }
+
+        return tiles;
+
+    }
+
+    public Tile[][] move(Piece attack, int row, int col, Tile[][] tiles){
+        int oRow = attack.getRow();
+        int oCol = attack.getCol();
+
+        tiles[oRow][oCol].setPiece(null);
+
+        attack.setRow(row);
+        attack.setCol(col);
+
+        tiles[row][col].setPiece(new Pawn(attack.getSide(), attack.getRow(), attack.getCol()));
+        tiles[row][col].setSelected(false, null);
+
+        return tiles;
+
     }
 }
