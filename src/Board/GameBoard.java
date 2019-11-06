@@ -164,7 +164,7 @@ public class GameBoard {
                     chessboardTiles[i][j].setBackground(Color.GRAY);
 
                 }
-                chessboardTiles[i][j].setSelected(false);
+                chessboardTiles[i][j].setSelected(false, null);
 
             }
         }
