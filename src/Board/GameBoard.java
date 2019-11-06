@@ -1,5 +1,6 @@
 package Board;
 
+import Logic.Highlighting;
 import Logic.Mother;
 import Pieces.*;
 
@@ -20,6 +21,7 @@ public class GameBoard {
     private JPanel chessBoard;
     private Tile[][] chessboardTiles = new Tile[8][8];
     private Mother mother;
+    private Highlighting highlighter = new Highlighting();
     //fields
     /*
     public static final int QUEEN = 0, KING = 1,
@@ -132,7 +134,7 @@ public class GameBoard {
                             if(null!=b.getPiece()){
                                 System.out.println("Non null piece square");
                                 clearAnnotations(chessboardTiles);
-                                chessboardTiles = processMove(b.getPiece(), getChessboardTiles());
+                                chessboardTiles = markSquares(b.getPiece(), getChessboardTiles());
                                 setChessboardTiles(chessboardTiles);
 
                             }
@@ -164,7 +166,7 @@ public class GameBoard {
                     chessboardTiles[i][j].setBackground(Color.GRAY);
 
                 }
-                chessboardTiles[i][j].setSelected(false);
+                chessboardTiles[i][j].setSelected(false, null);
 
             }
         }
@@ -245,17 +247,17 @@ public class GameBoard {
         }
     }
 
-    public Tile[][] processMove(Piece piece, Tile[][] tiles){
+    public Tile[][] markSquares(Piece piece, Tile[][] tiles){
 
         String type = piece.getType();
         Tile tile = tiles[piece.getRow()][piece.getCol()];
         System.out.println("Processing move");
 
-        if("PAWN".equals(type)){
+        /*if("PAWN".equals(type)){
 
             if(Color.WHITE.equals(piece.getSide())){
 
-                tiles[piece.getRow()-1][piece.getCol()].setBackground(Color.YELLOW);
+                *//*tiles[piece.getRow()-1][piece.getCol()].setBackground(Color.YELLOW);
                 tiles[piece.getRow()-1][piece.getCol()].setSelected(true, piece);
 
                 if(6==piece.getRow()){
@@ -263,22 +265,14 @@ public class GameBoard {
                     tiles[piece.getRow()-2][piece.getCol()].setBackground(Color.YELLOW);
                     tiles[piece.getRow()-2][piece.getCol()].setSelected(true, piece);
 
-                }
+                }*//*
             }
             else{
-                tiles[piece.getRow()+1][piece.getCol()].setBackground(Color.YELLOW);
-                tiles[piece.getRow()+1][piece.getCol()].setSelected(true, piece);
 
-                if(1==piece.getRow()){
-
-                    tiles[piece.getRow()+2][piece.getCol()].setBackground(Color.YELLOW);
-                    tiles[piece.getRow()+2][piece.getCol()].setSelected(true, piece);
-
-                }
             }
-        }
+        }*/
 
-        return tiles;
+        return highlighter.finder(tiles, piece);
 
     }
 
