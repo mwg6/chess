@@ -285,7 +285,7 @@ public class GameBoard {
         attack.setRow(row);
         attack.setCol(col);
 
-        tiles[row][col].setPiece(new Pawn(attack.getSide(), attack.getRow(), attack.getCol()));
+        tiles[row][col].setPiece(attack);
         tiles[row][col].setSelected(false, null);
 
         return tiles;

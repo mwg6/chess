@@ -59,7 +59,7 @@ public class Highlighting {
     }
     public Tile[][] rookRules(Tile[][] board, Piece piece){
 
-        return sideColsContact(straightColsContact(board, piece),piece);
+        return straightColsContact(board, piece);
     }
 
 
