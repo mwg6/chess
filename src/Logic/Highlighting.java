@@ -21,6 +21,8 @@ public class Highlighting {
                 else{
                     return bPawnRules(board, piece);
                 }
+            case "ROOK":
+                return rookRules(board, piece);
 
         }
 
@@ -52,6 +54,85 @@ public class Highlighting {
             board[piece.getRow()+2][piece.getCol()].setSelected(true, piece);
 
         }
+
+        return board;
+    }
+    public Tile[][] rookRules(Tile[][] board, Piece piece){
+
+        return sideColsContact(straightColsContact(board, piece),piece);
+    }
+
+
+    private Tile[][] straightColsContact(Tile[][] board, Piece piece){
+        int col = piece.getCol();
+        int row = piece.getRow();
+
+        for(int i =row+1; i<board.length; i++){
+            if(board[i][col].getPiece()!=null&&board[i][col].getPiece().getSide()!=piece.getSide()){
+                board[i][col].setBackground(Color.RED);
+                board[i][col].setSelected(true, piece);
+                break;
+            }
+            else if (board[i][col].getPiece()==null){
+                board[i][col].setBackground(Color.YELLOW);
+                board[i][col].setSelected(true, piece);
+            }
+            else if(board[i][col].getPiece()!=null&&board[i][col].getPiece().getSide()==piece.getSide()){
+                break;
+            }
+        }
+        for(int i =row-1; i>=0; i--){
+            if(board[i][col].getPiece()!=null&&board[i][col].getPiece().getSide()!=piece.getSide()){
+                board[i][col].setBackground(Color.RED);
+                board[i][col].setSelected(true, piece);
+                break;
+            }
+            else if (board[i][col].getPiece()==null){
+                board[i][col].setBackground(Color.YELLOW);
+                board[i][col].setSelected(true, piece);
+            }
+            else if(board[i][col].getPiece()!=null&&board[i][col].getPiece().getSide()==piece.getSide()){
+                break;
+            }
+        }
+
+
+        return board;
+    }
+
+    private Tile[][] sideColsContact(Tile[][] board, Piece piece){
+        int col = piece.getCol();
+        int row = piece.getRow();
+
+        for(int i = col+1; i<board.length; i++){
+            if(board[row][i].getPiece()!=null&&board[row][i].getPiece().getSide()!=piece.getSide()){
+                board[row][i].setBackground(Color.RED);
+                board[row][i].setSelected(true, piece);
+                break;
+            }
+            else if (board[row][i].getPiece()==null){
+                board[row][i].setBackground(Color.YELLOW);
+                board[row][i].setSelected(true, piece);
+            }
+            else if(board[row][i].getPiece()!=null&&board[row][i].getPiece().getSide()==piece.getSide()){
+                break;
+            }
+        }
+        for(int i =col-1; i>=0; i--){
+            if(board[row][i].getPiece()!=null&&board[row][i].getPiece().getSide()!=piece.getSide()){
+                board[row][i].setBackground(Color.RED);
+                board[row][i].setSelected(true, piece);
+                break;
+            }
+            else if (board[row][i].getPiece()==null){
+                board[row][i].setBackground(Color.YELLOW);
+                board[row][i].setSelected(true, piece);
+            }
+            else if(board[row][i].getPiece()!=null&&board[row][i].getPiece().getSide()==piece.getSide()){
+                break;
+            }
+        }
+
 
         return board;
     }
