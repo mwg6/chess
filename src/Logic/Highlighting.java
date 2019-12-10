@@ -59,7 +59,7 @@ public class Highlighting {
     }
     public Tile[][] rookRules(Tile[][] board, Piece piece){
 
-        return straightColsContact(board, piece);
+        return sideColsContact(straightColsContact(board, piece),piece);
     }
 
 
@@ -92,6 +92,43 @@ public class Highlighting {
                 board[i][col].setSelected(true, piece);
             }
             else if(board[i][col].getPiece()!=null&&board[i][col].getPiece().getSide()==piece.getSide()){
+                break;
+            }
+        }
+
+
+        return board;
+    }
+
+    private Tile[][] sideColsContact(Tile[][] board, Piece piece){
+        //int col = piece.getCol();
+        int row = piece.getRow();
+
+        for(int i = row; i<board.length; i++){
+            if(board[row][i].getPiece()!=null&&board[row][i].getPiece().getSide()!=piece.getSide()){
+                board[row][i].setBackground(Color.RED);
+                board[row][i].setSelected(true, piece);
+                break;
+            }
+            else if (board[row][i].getPiece()==null){
+                board[row][i].setBackground(Color.YELLOW);
+                board[row][i].setSelected(true, piece);
+            }
+            else if(board[row][i].getPiece()!=null&&board[row][i].getPiece().getSide()==piece.getSide()){
+                break;
+            }
+        }
+        for(int i =row; i>=0; i--){
+            if(board[row][i].getPiece()!=null&&board[row][i].getPiece().getSide()!=piece.getSide()){
+                board[row][i].setBackground(Color.RED);
+                board[row][i].setSelected(true, piece);
+                break;
+            }
+            else if (board[row][i].getPiece()==null){
+                board[row][i].setBackground(Color.YELLOW);
+                board[row][i].setSelected(true, piece);
+            }
+            else if(board[row][i].getPiece()!=null&&board[row][i].getPiece().getSide()==piece.getSide()){
                 break;
             }
         }
