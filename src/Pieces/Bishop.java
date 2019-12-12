@@ -16,7 +16,7 @@ public class Bishop implements Piece{
         this.row=row;
         this.col=col;
 
-        type = "Bishop";
+        type = "BISHOP";
 
         if(Color.BLACK.equals(color)){
 

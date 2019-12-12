@@ -23,12 +23,17 @@ public class Highlighting {
                 }
             case "ROOK":
                 return rookRules(board, piece);
-
+            case "KNIGHT":
+                return knightRules(board, piece);
+            case "BISHOP":
+                return bishopRules(board, piece);
         }
 
 
         return board;
     }
+
+    //TODO add pawn take rules
 
     public Tile[][] wPawnRules(Tile[][] board, Piece piece){
 
@@ -132,6 +137,181 @@ public class Highlighting {
                 break;
             }
         }
+
+
+        return board;
+    }
+    
+    private Tile[][] knightRules(Tile[][] board, Piece piece){
+        int col = piece.getCol();
+        int row = piece.getRow();
+        Color side = piece.getSide();
+        
+        if(row+2<board.length){
+            if(col-1>=0){
+                if(board[row+2][col-1].getPiece()==null){
+                    board[row+2][col-1].setBackground(Color.YELLOW);
+                    board[row+2][col-1].setSelected(true, piece);
+                }
+                else if(board[row+2][col-1].getPiece().getSide()!=side){
+                    board[row+2][col-1].setBackground(Color.RED);
+                    board[row+2][col-1].setSelected(true, piece);
+                }
+            }
+            if(col+1<board[row+2].length){
+                if(board[row+2][col+1].getPiece()==null){
+                    board[row+2][col+1].setBackground(Color.YELLOW);
+                    board[row+2][col+1].setSelected(true, piece);
+                }
+                else if(board[row+2][col+1].getPiece().getSide()!=side){
+                    board[row+2][col+1].setBackground(Color.RED);
+                    board[row+2][col+1].setSelected(true, piece);
+                }
+            }
+        }
+
+        if(row+1<board.length){
+            if(col-2>=0){
+                if(board[row+1][col-2].getPiece()==null){
+                    board[row+1][col-2].setBackground(Color.YELLOW);
+                    board[row+1][col-2].setSelected(true, piece);
+                }
+                else if(board[row+1][col-2].getPiece().getSide()!=side){
+                    board[row+1][col-2].setBackground(Color.RED);
+                    board[row+1][col-2].setSelected(true, piece);
+                }
+            }
+            if(col+2<board[row+1].length){
+                if(board[row+1][col+2].getPiece()==null){
+                    board[row+1][col+2].setBackground(Color.YELLOW);
+                    board[row+1][col+2].setSelected(true, piece);
+                }
+                else if(board[row+1][col+2].getPiece().getSide()!=side){
+                    board[row+1][col+2].setBackground(Color.RED);
+                    board[row+1][col+2].setSelected(true, piece);
+                }
+            }
+        }
+        if(row-1<board.length){
+            if(col-2>=0){
+                if(board[row-1][col-2].getPiece()==null){
+                    board[row-1][col-2].setBackground(Color.YELLOW);
+                    board[row-1][col-2].setSelected(true, piece);
+                }
+                else if(board[row-1][col-2].getPiece().getSide()!=side){
+                    board[row-1][col-2].setBackground(Color.RED);
+                    board[row-1][col-2].setSelected(true, piece);
+                }
+            }
+            if(col+2<board[row-1].length){
+                if(board[row-1][col+2].getPiece()==null){
+                    board[row-1][col+2].setBackground(Color.YELLOW);
+                    board[row-1][col+2].setSelected(true, piece);
+                }
+                else if(board[row-1][col+2].getPiece().getSide()!=side){
+                    board[row-1][col+2].setBackground(Color.RED);
+                    board[row-1][col+2].setSelected(true, piece);
+                }
+            }
+        }
+        if(row-2<board.length){
+            if(col-1>=0){
+                if(board[row-2][col-1].getPiece()==null){
+                    board[row-2][col-1].setBackground(Color.YELLOW);
+                    board[row-2][col-1].setSelected(true, piece);
+                }
+                else if(board[row-2][col-1].getPiece().getSide()!=side){
+                    board[row-2][col-1].setBackground(Color.RED);
+                    board[row-2][col-1].setSelected(true, piece);
+                }
+            }
+            if(col+1<board[row-2].length){
+                if(board[row-2][col+1].getPiece()==null){
+                    board[row-2][col+1].setBackground(Color.YELLOW);
+                    board[row-2][col+1].setSelected(true, piece);
+                }
+                else if(board[row-2][col+1].getPiece().getSide()!=side){
+                    board[row-2][col+1].setBackground(Color.RED);
+                    board[row-2][col+1].setSelected(true, piece);
+                }
+            }
+        }
+
+        return board;
+    }
+
+    private Tile[][] bishopRules(Tile[][] board, Piece piece){
+        int row = piece.getRow();
+        int col = piece.getCol();
+        Color side = piece.getSide();
+
+        //FIXME: cannot access col 0 for either row-i col-i or row+i col-i conditions
+
+        for(int i = 1; i<Math.min(board.length-row, board[row].length-col); i++){
+            if(row+i<board.length && col+i<board[row+i].length && board[row+i][col+i].getPiece()==null){
+                board[row+i][col+i].setBackground(Color.YELLOW);
+                board[row+i][col+i].setSelected(true, piece);
+            }
+            else if(row+i<board.length && col+i<board[row+i].length && board[row+i][col+i].getPiece().getSide()!=side){
+                board[row+i][col+i].setBackground(Color.RED);
+                board[row+i][col+i].setSelected(true, piece);
+                break;
+            }
+            else{
+                break;
+            }
+        }
+
+        for(int i = 1; i<=Math.min(board.length-row, col); i++){
+
+            if(row+i<board.length && col-i>=0 && board[row+i][col-i].getPiece()==null){
+                board[row+i][col-i].setBackground(Color.YELLOW);
+                board[row+i][col-i].setSelected(true, piece);
+            }
+            else if(row+i<board.length && col-i>=0 && board[row+i][col-i].getPiece().getSide()!=side){
+                board[row+i][col-i].setBackground(Color.RED);
+                board[row+i][col-i].setSelected(true, piece);
+                break;
+            }
+            else{
+                break;
+            }
+        }
+
+        for(int i = 1; i<=Math.min(row, board[row].length-col); i++){
+            if(row-i>=0 && col+i<board[row-i].length && board[row-i][col+i].getPiece()==null){
+                board[row-i][col+i].setBackground(Color.YELLOW);
+                board[row-i][col+i].setSelected(true, piece);
+            }
+            else if(row-i>=0 && col+i<board[row-i].length && board[row-i][col+i].getPiece().getSide()!=side){
+                board[row-i][col+i].setBackground(Color.RED);
+                board[row-i][col+i].setSelected(true, piece);
+                break;
+            }
+            else{
+                break;
+            }
+        }
+
+        for(int i = 1; i<=Math.min(row, col); i++){
+            System.out.println(Math.min(row, col));
+
+            System.out.println(col-i +" "+(row-i));
+
+            if(row-i>=0 && col-i>=0 && board[row-i][col-i].getPiece()==null){
+                board[row-i][col-i].setBackground(Color.YELLOW);
+                board[row-i][col-i].setSelected(true, piece);
+            }
+            else if(row-i>=0 && col-i>=0 && board[row-i][col-i].getPiece().getSide()!=side){
+                board[row-i][col-i].setBackground(Color.RED);
+                board[row-i][col-i].setSelected(true, piece);
+                break;
+            }
+            else{
+                break;
+            }
+        }
+
 
 
         return board;
