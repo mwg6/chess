@@ -248,11 +248,11 @@ public class Highlighting {
         //FIXME: cannot access col 0 for either row-i col-i or row+i col-i conditions
 
         for(int i = 1; i<Math.min(board.length-row, board[row].length-col); i++){
-            if(board[row+i][col+i].getPiece()==null){
+            if(row+i<board.length && col+i<board[row+i].length && board[row+i][col+i].getPiece()==null){
                 board[row+i][col+i].setBackground(Color.YELLOW);
                 board[row+i][col+i].setSelected(true, piece);
             }
-            else if(board[row+i][col+i].getPiece().getSide()!=side){
+            else if(row+i<board.length && col+i<board[row+i].length && board[row+i][col+i].getPiece().getSide()!=side){
                 board[row+i][col+i].setBackground(Color.RED);
                 board[row+i][col+i].setSelected(true, piece);
                 break;
@@ -263,13 +263,12 @@ public class Highlighting {
         }
 
         for(int i = 1; i<=Math.min(board.length-row, col); i++){
-            System.out.println(col +" "+(board.length-row));
 
-            if(board[row+i][col-i].getPiece()==null){
+            if(row+i<board.length && col-i>=0 && board[row+i][col-i].getPiece()==null){
                 board[row+i][col-i].setBackground(Color.YELLOW);
                 board[row+i][col-i].setSelected(true, piece);
             }
-            else if(board[row+i][col-i].getPiece().getSide()!=side){
+            else if(row+i<board.length && col-i>=0 && board[row+i][col-i].getPiece().getSide()!=side){
                 board[row+i][col-i].setBackground(Color.RED);
                 board[row+i][col-i].setSelected(true, piece);
                 break;
@@ -280,11 +279,11 @@ public class Highlighting {
         }
 
         for(int i = 1; i<=Math.min(row, board[row].length-col); i++){
-            if(board[row-i][col+i].getPiece()==null){
+            if(row-i>=0 && col+i<board[row-i].length && board[row-i][col+i].getPiece()==null){
                 board[row-i][col+i].setBackground(Color.YELLOW);
                 board[row-i][col+i].setSelected(true, piece);
             }
-            else if(board[row-i][col+i].getPiece().getSide()!=side){
+            else if(row-i>=0 && col+i<board[row-i].length && board[row-i][col+i].getPiece().getSide()!=side){
                 board[row-i][col+i].setBackground(Color.RED);
                 board[row-i][col+i].setSelected(true, piece);
                 break;
@@ -294,12 +293,16 @@ public class Highlighting {
             }
         }
 
-        for(int i = 1; i<Math.min(row, col); i++){
-            if(board[row-i][col-i].getPiece()==null){
+        for(int i = 1; i<=Math.min(row, col); i++){
+            System.out.println(Math.min(row, col));
+
+            System.out.println(col-i +" "+(row-i));
+
+            if(row-i>=0 && col-i>=0 && board[row-i][col-i].getPiece()==null){
                 board[row-i][col-i].setBackground(Color.YELLOW);
                 board[row-i][col-i].setSelected(true, piece);
             }
-            else if(board[row-i][col-i].getPiece().getSide()!=side){
+            else if(row-i>=0 && col-i>=0 && board[row-i][col-i].getPiece().getSide()!=side){
                 board[row-i][col-i].setBackground(Color.RED);
                 board[row-i][col-i].setSelected(true, piece);
                 break;
