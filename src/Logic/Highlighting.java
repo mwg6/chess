@@ -27,6 +27,10 @@ public class Highlighting {
                 return knightRules(board, piece);
             case "BISHOP":
                 return bishopRules(board, piece);
+            case "QUEEN":
+                return queenRules(board, piece);
+            case "KING":
+                return kingRules(board, piece);
         }
 
 
@@ -61,6 +65,42 @@ public class Highlighting {
         }
 
         return board;
+    }
+
+    private Tile[][] kingRules(Tile[][] board, Piece piece){
+        int row = piece.getRow();
+        int col = piece.getCol();
+        Color side = piece.getSide();
+
+        for(int i = (col-1<0?0:col-1);i<(col+1>=board[row].length?board[row].length-1:col+1); i++){
+            if(!(row+1<board.length)){
+                if(board[row+1][i].getPiece()==null){
+                    board[row+1][i].setBackground(Color.YELLOW);
+                    board[row+1][i].setSelected(true, piece);
+                }
+                else if(board[row+1][i].getPiece().getSide()!=side){
+                    board[row+1][i].setBackground(Color.RED);
+                    board[row+1][i].setSelected(true, piece);
+                }
+            }
+
+            if(!(row-1<0)){
+                if(board[row-1][i].getPiece()==null){
+                    board[row-1][i].setBackground(Color.YELLOW);
+                    board[row-1][i].setSelected(true, piece);
+                }
+                else if(board[row-1][i].getPiece().getSide()!=side){
+                    board[row-1][i].setBackground(Color.RED);
+                    board[row-1][i].setSelected(true, piece);
+                }
+            }
+        }
+
+        return board;
+    }
+
+    private Tile[][] queenRules(Tile[][] board, Piece piece){
+        return rookRules(bishopRules(board,piece),piece);
     }
     public Tile[][] rookRules(Tile[][] board, Piece piece){
 
