@@ -40,28 +40,61 @@ public class Highlighting {
     //TODO add pawn take rules
 
     public Tile[][] wPawnRules(Tile[][] board, Piece piece){
+        
+        int row = piece.getRow();
+        int col = piece.getCol();
+        Color side = piece.getSide();
+        
+        if(board[row-1][col].getPiece()==null){
+            board[row-1][col].setBackground(Color.YELLOW);
+            board[row-1][col].setSelected(true, piece);
 
-        board[piece.getRow()-1][piece.getCol()].setBackground(Color.YELLOW);
-        board[piece.getRow()-1][piece.getCol()].setSelected(true, piece);
+            if(6==row){
+                board[row-2][col].setBackground(Color.YELLOW);
+                board[row-2][col].setSelected(true, piece);
 
-        if(6==piece.getRow()){
-
-            board[piece.getRow()-2][piece.getCol()].setBackground(Color.YELLOW);
-            board[piece.getRow()-2][piece.getCol()].setSelected(true, piece);
-
+            }
         }
+
+        if(board[row-1][col+1].getPiece()!=null&&board[row-1][col+1].getPiece().getSide()!=side){
+            board[row-1][col+1].setBackground(Color.RED);
+            board[row-1][col+1].setSelected(true, piece);
+            
+        }
+        if(board[row-1][col-1].getPiece()!=null&&board[row-1][col-1].getPiece().getSide()!=side){
+            board[row-1][col-1].setBackground(Color.RED);
+            board[row-1][col-1].setSelected(true, piece);
+        }
+
+        
         return board;
     }
     public Tile[][] bPawnRules(Tile[][] board, Piece piece){
+        int row = piece.getRow();
+        int col = piece.getCol();
+        Color side = piece.getSide();
+        
+        if(board[row+1][col].getPiece()==null){
+            board[row+1][col].setBackground(Color.YELLOW);
+            board[row+1][col].setSelected(true, piece);
 
-        board[piece.getRow()+1][piece.getCol()].setBackground(Color.YELLOW);
-        board[piece.getRow()+1][piece.getCol()].setSelected(true, piece);
+            if(1==row){
 
-        if(1==piece.getRow()){
+                board[row+2][col].setBackground(Color.YELLOW);
+                board[row+2][col].setSelected(true, piece);
 
-            board[piece.getRow()+2][piece.getCol()].setBackground(Color.YELLOW);
-            board[piece.getRow()+2][piece.getCol()].setSelected(true, piece);
+            }
+        }
+        
 
+        if(board[row+1][col+1].getPiece()!=null&&board[row+1][col+1].getPiece().getSide()!=side){
+            board[row+1][col+1].setBackground(Color.RED);
+            board[row+1][col+1].setSelected(true, piece);
+
+        }
+        if(board[row+1][col-1].getPiece()!=null&&board[row+1][col-1].getPiece().getSide()!=side){
+            board[row+1][col-1].setBackground(Color.RED);
+            board[row+1][col-1].setSelected(true, piece);
         }
 
         return board;
