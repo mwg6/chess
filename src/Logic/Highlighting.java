@@ -72,8 +72,8 @@ public class Highlighting {
         int col = piece.getCol();
         Color side = piece.getSide();
 
-        for(int i = (col-1<0?0:col-1);i<(col+1>=board[row].length?board[row].length-1:col+1); i++){
-            if(!(row+1<board.length)){
+        for(int i = (col-1<0?0:col-1);i<(col+1>board[row].length?board[row].length:col+2); i++){
+            if(row+1<board.length){
                 if(board[row+1][i].getPiece()==null){
                     board[row+1][i].setBackground(Color.YELLOW);
                     board[row+1][i].setSelected(true, piece);
@@ -84,7 +84,7 @@ public class Highlighting {
                 }
             }
 
-            if(!(row-1<0)){
+            if(row-1>=0){
                 if(board[row-1][i].getPiece()==null){
                     board[row-1][i].setBackground(Color.YELLOW);
                     board[row-1][i].setSelected(true, piece);
@@ -94,7 +94,20 @@ public class Highlighting {
                     board[row-1][i].setSelected(true, piece);
                 }
             }
+            
+            if(i!=col){
+                if(board[row][i].getPiece()==null){
+                    board[row][i].setBackground(Color.YELLOW);
+                    board[row][i].setSelected(true, piece);
+                }
+                else if(board[row][i].getPiece().getSide()!=side){
+                    board[row][i].setBackground(Color.RED);
+                    board[row][i].setSelected(true, piece);
+                }
+            }
         }
+        
+        
 
         return board;
     }
