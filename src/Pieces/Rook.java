@@ -10,12 +10,14 @@ public class Rook implements Piece{
     private final ImageIcon icon;
     private int row;
     private int col;
+    private boolean moved;
 
 
     public Rook(Color color, int row, int col){
         this.color = color;
         this.row=row;
         this.col=col;
+        this.moved = false;
         type = "ROOK";
 
         if(Color.BLACK.equals(color)){
@@ -55,5 +57,12 @@ public class Rook implements Piece{
 
     public void setRow(int row) {
         this.row = row;
+    }
+
+    public boolean hasMoved(){
+        return moved;
+    }
+    public void setMoved(){
+        moved=true;
     }
 }
