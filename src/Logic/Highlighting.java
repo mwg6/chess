@@ -194,9 +194,10 @@ public class Highlighting {
     private Tile[][] sideColsContact(Tile[][] board, Piece piece){
         int col = piece.getCol();
         int row = piece.getRow();
+        Color side = piece.getSide();
 
         for(int i = col+1; i<board.length; i++){
-            if(board[row][i].getPiece()!=null&&board[row][i].getPiece().getSide()!=piece.getSide()){
+            if(board[row][i].getPiece()!=null&&board[row][i].getPiece().getSide()!=side){
                 board[row][i].setBackground(Color.RED);
                 board[row][i].setSelected(true, piece);
                 break;
@@ -205,12 +206,12 @@ public class Highlighting {
                 board[row][i].setBackground(Color.YELLOW);
                 board[row][i].setSelected(true, piece);
             }
-            else if(board[row][i].getPiece()!=null&&board[row][i].getPiece().getSide()==piece.getSide()){
+            else if(board[row][i].getPiece()!=null&&board[row][i].getPiece().getSide()==side){
                 break;
             }
         }
         for(int i =col-1; i>=0; i--){
-            if(board[row][i].getPiece()!=null&&board[row][i].getPiece().getSide()!=piece.getSide()){
+            if(board[row][i].getPiece()!=null&&board[row][i].getPiece().getSide()!=side){
                 board[row][i].setBackground(Color.RED);
                 board[row][i].setSelected(true, piece);
                 break;
@@ -219,7 +220,7 @@ public class Highlighting {
                 board[row][i].setBackground(Color.YELLOW);
                 board[row][i].setSelected(true, piece);
             }
-            else if(board[row][i].getPiece()!=null&&board[row][i].getPiece().getSide()==piece.getSide()){
+            else if(board[row][i].getPiece()!=null&&board[row][i].getPiece().getSide()==side){
                 break;
             }
         }
@@ -331,8 +332,6 @@ public class Highlighting {
         int col = piece.getCol();
         Color side = piece.getSide();
 
-        //FIXME: cannot access col 0 for either row-i col-i or row+i col-i conditions
-
         for(int i = 1; i<Math.min(board.length-row, board[row].length-col); i++){
             if(row+i<board.length && col+i<board[row+i].length && board[row+i][col+i].getPiece()==null){
                 board[row+i][col+i].setBackground(Color.YELLOW);
@@ -380,9 +379,6 @@ public class Highlighting {
         }
 
         for(int i = 1; i<=Math.min(row, col); i++){
-            System.out.println(Math.min(row, col));
-
-            System.out.println(col-i +" "+(row-i));
 
             if(row-i>=0 && col-i>=0 && board[row-i][col-i].getPiece()==null){
                 board[row-i][col-i].setBackground(Color.YELLOW);
