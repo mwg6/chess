@@ -7,37 +7,45 @@ import java.awt.*;
 
 public class Highlighting {
 
+    private Color sideTurn;
     public Highlighting(){
+        sideTurn=Color.WHITE;
+    }
 
+    public void switchSide(){
+        if(sideTurn==Color.WHITE){
+            sideTurn=Color.BLACK;
+        }
+        else{
+            sideTurn=Color.WHITE;
+        }
     }
 
     public Tile[][] finder(Tile[][] board, Piece piece){
-
-        switch(piece.getType()){
-            case "PAWN":
-                if(piece.getSide()== Color.WHITE){
-                    return wPawnRules(board, piece);
-                }
-                else{
-                    return bPawnRules(board, piece);
-                }
-            case "ROOK":
-                return rookRules(board, piece);
-            case "KNIGHT":
-                return knightRules(board, piece);
-            case "BISHOP":
-                return bishopRules(board, piece);
-            case "QUEEN":
-                return queenRules(board, piece);
-            case "KING":
-                return kingRules(board, piece);
+        if(piece.getSide()==sideTurn){
+            switch(piece.getType()){
+                case "PAWN":
+                    if(piece.getSide()== Color.WHITE){
+                        return wPawnRules(board, piece);
+                    }
+                    else{
+                        return bPawnRules(board, piece);
+                    }
+                case "ROOK":
+                    return rookRules(board, piece);
+                case "KNIGHT":
+                    return knightRules(board, piece);
+                case "BISHOP":
+                    return bishopRules(board, piece);
+                case "QUEEN":
+                    return queenRules(board, piece);
+                case "KING":
+                    return kingRules(board, piece);
+            }
         }
-
 
         return board;
     }
-
-    //TODO add pawn take rules
 
     public Tile[][] wPawnRules(Tile[][] board, Piece piece){
         
@@ -148,11 +156,11 @@ public class Highlighting {
     private Tile[][] queenRules(Tile[][] board, Piece piece){
         return rookRules(bishopRules(board,piece),piece);
     }
-    public Tile[][] rookRules(Tile[][] board, Piece piece){
+
+    private Tile[][] rookRules(Tile[][] board, Piece piece){
 
         return sideColsContact(straightColsContact(board, piece),piece);
     }
-
 
     private Tile[][] straightColsContact(Tile[][] board, Piece piece){
         int col = piece.getCol();

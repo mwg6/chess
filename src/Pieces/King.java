@@ -11,6 +11,7 @@ public class King implements Piece{
     private int row;
     private int col;
     private  boolean moved;
+    private boolean isChecked;
 
     public King(Color color, int row, int col){
         this.color = color;
@@ -61,7 +62,16 @@ public class King implements Piece{
     public boolean hasMoved(){
         return moved;
     }
+
     public void setMoved(){
         moved=true;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
     }
 }
