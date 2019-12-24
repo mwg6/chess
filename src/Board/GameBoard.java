@@ -22,6 +22,7 @@ public class GameBoard {
     private Tile[][] chessboardTiles = new Tile[8][8];
     private Mother mother;
     private Highlighting highlighter = new Highlighting();
+    private boolean isWhiteTurn =true;
     //fields
     /*
     public static final int QUEEN = 0, KING = 1,
@@ -48,7 +49,7 @@ public class GameBoard {
         JToolBar tools = new JToolBar();
         tools.setFloatable(false);
         gui.add(tools, BorderLayout.PAGE_START);
-        gui.setMinimumSize(new Dimension(200,200));
+        gui.setMinimumSize(new Dimension(400,400));
 
         //adding toolbar compenents
         tools.add(new JButton("To DO"));
@@ -125,22 +126,18 @@ public class GameBoard {
                     public void actionPerformed(ActionEvent e){
                         if(b.isSelected()){
                             //move case
-                            System.out.println("Selected Square");
                             chessboardTiles = move(b.selectedBy(), b.getRow(), b.getCol(), getChessboardTiles());
                             clearAnnotations(chessboardTiles);
                             setChessboardTiles(chessboardTiles);
+                            highlighter.switchSide();
                         }
                         else{
                             if(null!=b.getPiece()){
-                                System.out.println("Non null piece square");
                                 clearAnnotations(chessboardTiles);
                                 chessboardTiles = markSquares(b.getPiece(), getChessboardTiles());
                                 setChessboardTiles(chessboardTiles);
-
                             }
                             else{
-                                System.out.println("Null piece square");
-
                                 clearAnnotations(chessboardTiles);
                             }
 
@@ -248,29 +245,6 @@ public class GameBoard {
     }
 
     public Tile[][] markSquares(Piece piece, Tile[][] tiles){
-
-        String type = piece.getType();
-        Tile tile = tiles[piece.getRow()][piece.getCol()];
-        System.out.println("Processing move");
-
-        /*if("PAWN".equals(type)){
-
-            if(Color.WHITE.equals(piece.getSide())){
-
-                *//*tiles[piece.getRow()-1][piece.getCol()].setBackground(Color.YELLOW);
-                tiles[piece.getRow()-1][piece.getCol()].setSelected(true, piece);
-
-                if(6==piece.getRow()){
-
-                    tiles[piece.getRow()-2][piece.getCol()].setBackground(Color.YELLOW);
-                    tiles[piece.getRow()-2][piece.getCol()].setSelected(true, piece);
-
-                }*//*
-            }
-            else{
-
-            }
-        }*/
 
         return highlighter.finder(tiles, piece);
 
