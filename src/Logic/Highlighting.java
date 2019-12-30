@@ -1,7 +1,9 @@
 package Logic;
 
 import Board.Tile;
+import Pieces.King;
 import Pieces.Piece;
+import Pieces.Rook;
 
 import java.awt.*;
 
@@ -40,7 +42,7 @@ public class Highlighting {
                 case "QUEEN":
                     return queenRules(board, piece);
                 case "KING":
-                    return kingRules(board, piece);
+                    return kingRules(board, (King) piece);
             }
         }
 
@@ -108,7 +110,7 @@ public class Highlighting {
         return board;
     }
 
-    private Tile[][] kingRules(Tile[][] board, Piece piece){
+    private Tile[][] kingRules(Tile[][] board, King piece){
         int row = piece.getRow();
         int col = piece.getCol();
         Color side = piece.getSide();
@@ -148,7 +150,46 @@ public class Highlighting {
             }
         }
         
-        
+        if(!piece.hasMoved()){
+            if(board[row][0].getPiece().getType().equals("ROOK")){
+                Rook rZ = (Rook) board[row][0].getPiece();
+                if(!rZ.hasMoved()){
+                    boolean canCastle = true;
+                    for(int i = col-1; i>rZ.getCol(); i--){
+                        if(board[row][i].getPiece()!=null){
+                            canCastle=false;
+                        }
+                    }
+
+                    if(canCastle){
+                        board[row][col-1].setSelected(true, piece);
+                        board[row][col-1].setBackground(Color.YELLOW);
+                        board[row][col-2].setSelected(true, piece);
+                        board[row][col-2].setBackground(Color.GREEN);
+                    }
+                }
+            }
+
+            int colL = board[row].length-1;
+            if(board[row][colL].getPiece().getType().equals("ROOK")){
+                Rook rZ = (Rook) board[row][colL].getPiece();
+                if(!rZ.hasMoved()){
+                    boolean canCastle = true;
+                    for(int i = col+1; i<colL; i++){
+                        if(board[row][i].getPiece()!=null){
+                            canCastle=false;
+                        }
+                    }
+
+                    if(canCastle){
+                        board[row][col+1].setSelected(true, piece);
+                        board[row][col+1].setBackground(Color.YELLOW);
+                        board[row][col+2].setSelected(true, piece);
+                        board[row][col+2].setBackground(Color.GREEN);
+                    }
+                }
+            }
+        }
 
         return board;
     }
