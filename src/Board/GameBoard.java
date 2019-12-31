@@ -2,6 +2,7 @@ package Board;
 
 import Logic.Highlighting;
 import Logic.Mother;
+import Logic.UndoStack;
 import Pieces.*;
 
 import javax.imageio.ImageIO;
@@ -14,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.net.URL;
+import java.util.Arrays;
 
 public class GameBoard {
     //use the JPanel as it's good for collecting components. Return and add to a JFrame for display
@@ -22,7 +24,7 @@ public class GameBoard {
     private Tile[][] chessboardTiles = new Tile[8][8];
     private Mother mother;
     private Highlighting highlighter = new Highlighting();
-    private boolean isWhiteTurn =true;
+    private UndoStack pastBoards = new UndoStack();
     //fields
     /*
     public static final int QUEEN = 0, KING = 1,
@@ -53,6 +55,9 @@ public class GameBoard {
 
         //adding toolbar compenents
         tools.add(new JButton("To DO"));
+        JButton undo = new JButton("Undo");
+        undo.addActionListener(e->UndoMove());
+        tools.add(undo);
 
 
         chessBoard = new JPanel(new GridLayout(0,8)){
@@ -126,6 +131,7 @@ public class GameBoard {
                     public void actionPerformed(ActionEvent e){
                         if(b.isSelected()){
                             //move case
+                            pastBoards.addBoard(chessboardTiles);
                             chessboardTiles = move(b.selectedBy(), b.getRow(), b.getCol(), getChessboardTiles());
                             clearAnnotations(chessboardTiles);
                             setChessboardTiles(chessboardTiles);
@@ -134,6 +140,7 @@ public class GameBoard {
                         else{
                             if(null!=b.getPiece()){
                                 clearAnnotations(chessboardTiles);
+                                pastBoards.addBoard(chessboardTiles);
                                 chessboardTiles = markSquares(b.getPiece(), getChessboardTiles());
                                 setChessboardTiles(chessboardTiles);
                             }
@@ -263,6 +270,19 @@ public class GameBoard {
         tiles[row][col].setSelected(false, null);
 
         return tiles;
+
+    }
+
+    public void UndoMove(){
+        System.out.println(Arrays.toString(chessboardTiles[0]));
+        chessboardTiles = pastBoards.undoMove();
+        System.out.println(Arrays.toString(chessboardTiles[0]));
+        if(chessboardTiles!=null){
+            clearAnnotations(chessboardTiles);
+            System.out.println("here");
+            setChessboardTiles(chessboardTiles);
+            highlighter.switchSide();
+        }
 
     }
 }
