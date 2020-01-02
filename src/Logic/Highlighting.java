@@ -66,12 +66,16 @@ public class Highlighting {
             }
         }
 
-        if(board[row-1][col+1].getPiece()!=null&&board[row-1][col+1].getPiece().getSide()!=side){
+        if(col+1<board[row].length
+                &&board[row-1][col+1].getPiece()!=null
+                &&board[row-1][col+1].getPiece().getSide()!=side){
             board[row-1][col+1].setBackground(Color.RED);
             board[row-1][col+1].setSelected(true, piece);
             
         }
-        if(board[row-1][col-1].getPiece()!=null&&board[row-1][col-1].getPiece().getSide()!=side){
+        if(col-1>=0
+                &&board[row-1][col-1].getPiece()!=null
+                &&board[row-1][col-1].getPiece().getSide()!=side){
             board[row-1][col-1].setBackground(Color.RED);
             board[row-1][col-1].setSelected(true, piece);
         }
@@ -97,12 +101,16 @@ public class Highlighting {
         }
         
 
-        if(board[row+1][col+1].getPiece()!=null&&board[row+1][col+1].getPiece().getSide()!=side){
+        if(col+1<board[row].length
+                &&board[row+1][col+1].getPiece()!=null
+                &&board[row+1][col+1].getPiece().getSide()!=side){
             board[row+1][col+1].setBackground(Color.RED);
             board[row+1][col+1].setSelected(true, piece);
 
         }
-        if(board[row+1][col-1].getPiece()!=null&&board[row+1][col-1].getPiece().getSide()!=side){
+        if(col-1>=0
+                &&board[row+1][col-1].getPiece()!=null
+                &&board[row+1][col-1].getPiece().getSide()!=side){
             board[row+1][col-1].setBackground(Color.RED);
             board[row+1][col-1].setSelected(true, piece);
         }
