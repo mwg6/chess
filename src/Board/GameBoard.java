@@ -274,13 +274,16 @@ public class GameBoard {
     }
 
     public void UndoMove(){
-        System.out.println(Arrays.toString(chessboardTiles[0]));
         chessboardTiles = pastBoards.undoMove();
-        System.out.println(Arrays.toString(chessboardTiles[0]));
         if(chessboardTiles!=null){
             clearAnnotations(chessboardTiles);
-            System.out.println("here");
-            setChessboardTiles(chessboardTiles);
+            //System.out.println("here");
+            for(int i = 0; i<chessboardTiles.length; i++){
+                for(int j = 0; j<chessboardTiles[i].length; j++){
+                    chessBoard.add(chessboardTiles[i][j]);
+
+                }
+            }
             highlighter.switchSide();
         }
 
