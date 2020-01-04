@@ -131,7 +131,7 @@ public class GameBoard {
                     public void actionPerformed(ActionEvent e){
                         if(b.isSelected()){
                             //move case
-                            pastBoards.addBoard(chessboardTiles);
+                            pastBoards.addBoard(cloneBoard(chessboardTiles));
                             chessboardTiles = move(b.selectedBy(), b.getRow(), b.getCol(), getChessboardTiles());
                             clearAnnotations(chessboardTiles);
                             setChessboardTiles(chessboardTiles);
@@ -140,7 +140,7 @@ public class GameBoard {
                         else{
                             if(null!=b.getPiece()){
                                 clearAnnotations(chessboardTiles);
-                                pastBoards.addBoard(chessboardTiles);
+                                pastBoards.addBoard(cloneBoard(chessboardTiles));
                                 chessboardTiles = markSquares(b.getPiece(), getChessboardTiles());
                                 setChessboardTiles(chessboardTiles);
                             }
@@ -156,7 +156,7 @@ public class GameBoard {
 
             }
         }
-
+        pastBoards.addBoard(chessboardTiles);
         setChessboardTiles(chessboardTiles);
     }
 
@@ -280,6 +280,7 @@ public class GameBoard {
             //System.out.println("here");
             for(int i = 0; i<chessboardTiles.length; i++){
                 for(int j = 0; j<chessboardTiles[i].length; j++){
+                    System.out.println("Adding " + chessboardTiles[i][j].getPiece() + " to row " + i + " col "+ j);
                     chessBoard.add(chessboardTiles[i][j]);
 
                 }
@@ -287,5 +288,17 @@ public class GameBoard {
             highlighter.switchSide();
         }
 
+    }
+
+    public Tile[][] cloneBoard(Tile[][] board){
+        //below line not extensible to non constant width board, fix
+        Tile[][] boardCopy = new Tile[board.length][board[0].length];
+        for(int i = 0; i<board.length; i++){
+            for(int j = 0; i<board[0].length; i++){
+                boardCopy[i][j] = new Tile(board[i][j]);
+            }
+        }
+
+        return boardCopy;
     }
 }

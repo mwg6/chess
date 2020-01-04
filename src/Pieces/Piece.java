@@ -3,8 +3,7 @@ package Pieces;
 import javax.swing.*;
 import java.awt.*;
 
-public interface Piece {
-
+public interface Piece{
 
     public Color getSide();
 
