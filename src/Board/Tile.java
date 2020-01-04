@@ -1,6 +1,6 @@
 package Board;
 
-import Pieces.Piece;
+import Pieces.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +20,42 @@ public class Tile extends JButton {
         this.col=col;
         selected = false;
 
+    }
+
+    public Tile(Tile tile){
+        Piece oldP = tile.piece;
+        Piece newP = null;
+        if(oldP!=null){
+            int row = oldP.getRow();
+            int col = oldP.getCol();
+            Color side = oldP.getSide();
+            switch(oldP.getType()){
+                case "PAWN":
+                    newP = new Pawn(side, row, col);
+                case "ROOK":
+                    newP = new Rook(side, row, col);
+                    //TODO preserve castling
+                   /* if(((Rook)oldP).hasMoved()){
+                        ((Rook) newP).setMoved();
+                    }*/
+                case "KNIGHT":
+                    newP = new Knight(side, row, col);
+                case "BISHOP":
+                    newP = new Bishop(side, row, col);
+                case "QUEEN":
+                    newP = new Queen(side, row, col);
+                case "KING":
+                    newP = new King(side, row, col);
+                /*    if(((King)oldP).hasMoved()){
+                        ((King) newP).setMoved();
+                    }*/
+            }
+        }
+
+        this.piece=newP;
+        this.row = tile.getRow();
+        this.col = tile.getCol();
+        selected = tile.selected;
     }
 
     public Piece getPiece(){
